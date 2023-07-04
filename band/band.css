@@ -1,0 +1,452 @@
+
+body {
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    background-image: URL(imagens/fundo_sisbol.jpg);
+    background-attachment: 	fixed;
+    background-repeat: no-repeat;
+    background-position: center center;
+    font-size: 7pt;
+    font-family: Verdana, Arial;
+}
+a.link{
+    TEXT-DECORATION: none;
+}
+
+/*#topo{
+    margin: 0px;
+    width: 100%;
+    height: 75px;
+    background-image: url(imagens/fundo_titulo.png);
+}*/
+
+/*topo Ver 2.5*/
+#topo{
+    margin: 0px;
+    width: 100%;
+    height: 75px;
+    background-image: url(imagens/bg_topo_25.png);
+}
+
+H3.titulo{
+    COLOR: #006633;
+}
+
+
+.style1 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.style2 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+}
+td.cabec1{
+    /* font-family: Corbel; font-size: 10pt; */
+    font-family: "trebuchet ms", Helvetica;
+    font-size: 8pt;
+    /* color: black; */
+    color: olive;    
+    font-weight: bold;
+}
+
+td.cabec2{
+    /* font-family: Cambria; font-size: 10pt; */
+    font-family: "trebuchet ms", Helvetica;
+    font-size: 8pt;
+    color: #fff;
+    /* color: #006531; */
+    font-weight: bold;
+}
+td.cabec3{
+    font-family: Verdana, Arial;
+    font-size: 5pt;
+    /* color: black; */
+    color: olive;  
+    font-weight: bold;
+}
+
+
+TABLE.lista
+{
+    background-color: #006633
+        /*#0000FF */
+}
+
+TABLE.formulario
+{
+    background-color: #006633
+        /*#0000FF */
+}
+
+TD
+{
+    MARGIN-TOP: 0pt;
+    FONT-SIZE: 8pt;
+    MARGIN-LEFT: 2pt;
+    MARGIN-RIGHT: 5pt;
+    FONT-FAMILY: Verdana, Arial;
+
+}
+textarea{
+    font-size: 9pt;
+    font-family: Courier;
+}
+
+textarea.flyframe{
+    font-size: 8pt;
+    font-family: Courier New;
+}
+
+
+
+SELECT
+{
+    FONT-SIZE: 7pt;
+    FONT-FAMILY: Verdana, Arial
+}
+INPUT
+{
+    FONT-SIZE: 7pt;
+    FONT-FAMILY: Verdana, Arial
+}
+BODY
+{
+    FONT-SIZE: 7pt;
+    FONT-FAMILY: Verdana, Arial
+}
+
+
+
+
+
+TR.cabec
+{
+    MARGIN-TOP: 0pt;
+    FONT-SIZE: 8pt;
+    MARGIN-LEFT: 2pt;
+    MARGIN-RIGHT: 5pt;
+    FONT-FAMILY: Verdana,Arial;
+
+    COLOR: white;
+    font-weight: bold;
+    /*font-style:italic;*/
+}
+
+
+TR.tr_cabec2
+{
+    MARGIN-TOP: 0pt;
+    FONT-SIZE: 8pt;
+    MARGIN-LEFT: 2pt;
+    MARGIN-RIGHT: 5pt;
+    FONT-FAMILY: Verdana, Arial;
+    background-color: #006633;
+    COLOR: #FFFFFF;
+    font-weight: bold;
+    /*font-style:italic;*/
+}
+
+
+TEXTAREA.tipo1
+{
+    font-size: 8pt;
+    font-family: Courier New;
+}
+
+/*	Menus */
+.horizontalcssmenu ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+/*Top level list items*/
+.horizontalcssmenu ul li{
+    position: relative;
+    display: inline;
+    float: left;
+}
+
+/*Top level menu link items style*/
+.horizontalcssmenu ul li a{
+    display: block;
+    width: 120px; /*Width of top level menu link items*/
+    padding: 1px 1px;
+    border: 2px solid #006633;
+    border-left-width: 2px;
+    text-decoration: none;
+    background: url(imagens/fundo_bt.png) center center no-repeat;
+    /*background: url(menubg.gif) center center repeat-x;*/
+    color: black;
+    /* font: bold 14px Candara; (modificacoes nas fontes do menu - ASP PARREIRA 06-05-2013)/*/
+    font-family: "trebuchet ms", Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/*Sub level menu*/
+.horizontalcssmenu ul li ul{
+    left: 0;
+    top: 0;
+    /*border-top: 2px solid blue;
+      border-top: 1px solid #202020;
+      border-left: 1px solid blue;
+      padding:0 13px 13px 0;
+      background:url(imagens/topo-dir.jpg) 100% 0 no-repeat;
+    */
+
+
+    border-right:  3px solid #006633;
+
+    border-bottom: 3px solid #006633;
+    position: absolute;
+    display: block;
+    visibility: hidden;
+    z-index: 100;
+
+    /* for IE
+    filter:alpha(opacity=90);*/
+    /* CSS3 standard
+    opacity:0.9;*/
+
+}
+
+/*Sub level menu list items*/
+.horizontalcssmenu ul li ul li{
+    display: inline;
+    float: none;
+}
+
+
+/* Sub level menu links style */
+.horizontalcssmenu ul li ul li a{
+    width: 200px; /*width of sub menu levels*/
+    border-top: 1px solid #202020;
+    border-left: 1px solid #202020;
+    border-right: 1px solid #202020;
+    border-bottom: 1px solid #202020;
+    font-weight: normal;
+    text-align: left;
+    padding: 2px 5px;
+    background: #EFEFEF;
+
+
+    border-width: 0 1px 1px 1px;
+}
+
+.horizontalcssmenu ul li a:hover{
+    background: url(imagens/fundo_bt2.png) center center no-repeat;
+    /*background: url(menubgover.gif) center center repeat-x;*/
+}
+
+.horizontalcssmenu ul li ul li a:hover{
+    /*background: #6CF7E2;
+    background: #DDEDFF;*/
+    background: #9AB9AA;
+}
+
+.horizontalcssmenu .arrowdiv{
+    position: absolute;
+    right: 0;
+
+
+}
+
+* html p#iepara{ /*For a paragraph (if any) that immediately follows menu, add 1em top spacing between the two in IE*/
+    padding-top: 1em;
+}
+
+/* Holly Hack for IE \*/
+* html .horizontalcssmenu ul li { float: left; height: 1%; }
+* html .horizontalcssmenu ul li a { height: 1%; }
+
+/* Sombras do Menu */
+.topo-dir {
+    background:url(imagens/topo-dir.jpg) 100% 0 no-repeat;
+    /* CSS3 standard */
+    opacity:0.9;
+    width:25em;
+}
+.baixo-esq {
+    background: url(imagens/baixo-esq.jpg) 0 100% no-repeat;
+}
+.baixo-dir {
+    background: url(imagens/baixo-dir.jpg) 100% 100% no-repeat;
+}
+
+/* End */
+
+/* $Id: example.css,v 1.5 2006/03/27 02:44:36 pat Exp $ */
+
+/*--------------------------------------------------
+  REQUIRED to hide the non-active tab content.
+  But do not hide them in the print stylesheet!
+  --------------------------------------------------*/
+.tabberlive .tabbertabhide {
+    display:none;
+}
+
+/*--------------------------------------------------
+  .tabber = before the tabber interface is set up
+  .tabberlive = after the tabber interface is set up
+  --------------------------------------------------*/
+.tabber {
+}
+.tabberlive {
+    margin-top:1em;
+}
+
+/*--------------------------------------------------
+  ul.tabbernav = the tab navigation list
+  li.tabberactive = the active tab
+  --------------------------------------------------*/
+ul.tabbernav
+{
+    margin:0;
+    padding: 3px 0;
+    border-bottom: 1px solid #006633;
+    /*font: bold 10px Candara, sans-serif;*/
+    /*PARREIRA 20-06-13*/
+    font-family: "trebuchet ms", Helvetica;
+    font-size: 12px;
+    font-weight: bold;
+
+}
+
+ul.tabbernav li
+{
+    list-style: none;
+    margin: 0;
+    display: inline;
+}
+
+ul.tabbernav li a
+{
+    padding: 3px 0.5em;
+    margin-left: 3px;
+    border: 1px solid #006633;
+    border-bottom: none;
+    background: #9AB9AA;
+    text-decoration: none;
+}
+
+ul.tabbernav li a:link { color: black; }
+ul.tabbernav li a:visited { color: #667; }
+
+ul.tabbernav li a:hover
+{
+    color: #000;
+    background: gainsboro;
+    border-color: #006633;
+}
+
+ul.tabbernav li.tabberactive a
+{
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+ul.tabbernav li.tabberactive a:hover
+{
+    color: #000;
+    background: white;
+    border-bottom: 1px solid white;
+}
+
+/*--------------------------------------------------
+  .tabbertab = the tab content
+  Add style only after the tabber interface is set up (.tabberlive)
+  --------------------------------------------------*/
+.tabberlive .tabbertab {
+    padding:5px;
+    border:1px solid #006633;
+    border-top:0;
+
+    /* If you don't want the tab size changing whenever a tab is changed
+       you can set a fixed height */
+
+    /* height:200px; */
+
+    /* If you set a fix height set overflow to auto and you will get a
+       scrollbar when necessary */
+
+    /* overflow:auto; */
+}
+
+/* If desired, hide the heading since a heading is provided by the tab */
+.tabberlive .tabbertab h2 {
+    display:none;
+    border:1px solid #006633;
+}
+.tabberlive .tabbertab h3 {
+    display:none;
+    border:1px solid #006633;
+}
+
+/* Example of using an ID to set different styles for the tabs on the page */
+.tabberlive#tab1 {
+}
+.tabberlive#tab2 {
+}
+.tabberlive#tab2 .tabbertab {
+    height:200px;
+    overflow:auto;
+}
+
+div.processa{
+    FONT-SIZE: 10pt;
+    font-weight: normal;
+    text-align: left;
+    color: red;
+}
+
+/* início das novas regras de css para correta apresentação do novo ordenaMateria */
+.orderMat {
+    font-family: Verdana, Geneva, sans-serif;
+
+    background: white;    
+    margin: 1px 2px 2px 2px; 
+    padding: 0.4em; 
+    padding-left: 1.5em; 
+    font-size: 1em; 
+    height: 18px; 
+}
+
+
+#sortable { 
+    list-style-type: none;
+    margin: 0; padding: 0; 
+    width: 100%; 
+}
+
+#sortable li { 
+    margin: 1px 1px 1px 1px; 
+    padding: 0.5em; 
+    padding-left: 1.3em; 
+    font-size: 1em; 
+    height: auto; 
+    text-wrap: normal; 
+    text-align: justify;
+}
+
+#sortable li span { 
+    position: absolute; 
+    margin-left: -0.3em; 
+}
+/* final das novas regras de css para correta apresentação do novo ordenaMateria - set/12 - Ten S.Lopes */
+
+/*PARREIRA .p_obs1 usaso para aviso sobre ENTER e SHIFT+ENTER*/
+        .p_obs1{
+                
+                margin:0;
+                padding:0;
+                font-family: "trebuchet ms", Helvetica;
+                font-weight: normal;
+                font-size: 10px;
+        }

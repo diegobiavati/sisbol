@@ -1,0 +1,80 @@
+<?php
+  class ColQM implements IColQM 
+  { private $db;
+    public function ColQM($db)
+    { $this->db = $db;
+    }
+    public function incluirRegistro($pQM)
+    { $q = "insert into qm (cod, descricao, data_atualiz) values ('". $pQM->getCod() ."', '". $pQM->getDescricao() .
+	    "',";
+	  $q = $q . "now())" ;     
+      /*$result = mysql_query($q,$this->db);
+      $num_rows = mysql_affected_rows();*/
+      //echo "<br><b>".$q."</b><br>";
+      $result = mysqli_query($this->db, $q);
+      $num_rows = mysqli_affected_rows($this->db);
+      if ($num_rows <= 0)
+      { throw new Exception('COLQM->Registro não Incluido');
+	  }
+    }
+    public function alterarRegistro($pQM)
+    { $q = "update qm set ";
+      $q = $q ."cod = '". $pQM->getCod() .  "',";
+      $q = $q . "descricao = '" . $pQM->getDescricao() . "',";
+	  $q = $q . "data_atualiz = now()" ;
+	  $q = $q . " where  cod = '" . $pQM->getCod()."'";
+	  //echo "<br><b>".$q."</b><br>";
+      $result = mysqli_query($this->db, $q);
+      $num_rows = mysqli_affected_rows($this->db);
+     // echo "Foi alterado .$num_rows. registros!";
+      if ($num_rows <= 0)
+      { throw new Exception('COLQM->Registro não alterado');
+	  }
+    }
+    public function excluirRegistro($pQM)
+    { $q = "delete from qm ";
+	  $q = $q . " where  cod = '" . $pQM->getCod()."'";
+	  //echo "<br><b>".$q."</b><br>";
+      $result = mysqli_query($this->db, $q);
+      
+      $num_rows = mysqli_affected_rows($this->db);
+      //echo $num_rows;
+      if ($num_rows <= 0)
+      { throw new Exception('COLQM->Registro não excluído');
+	  }
+    }
+    public function lerRegistro($codQM)
+    { $q = "select cod, descricao, data_atualiz from qm ";
+	  $q = $q . "  where  cod = '" . $codQM . "'";
+	 // echo "<br><b>".$q."</b><br>";
+      $result = mysqli_query($this->db, $q);
+	  if (mysqli_num_rows($result) <= 0)
+	  { return null;
+	  }
+	  else
+	  { $pQM = new QM();
+      
+        $row = mysqli_fetch_array($result);
+        $pQM->setCod($row['cod']);
+        $pQM->setDescricao($row['descricao']);
+        return $pQM;
+	  
+	  }
+    }
+    public function lerColecao($ordem)
+    { $q = "select cod, descricao from qm ";
+	  $q = $q . "  order by  " . $ordem;
+      $result = mysqli_query($this->db, $q);
+	  $num_rows = mysqli_num_rows($result);
+      $colQM2 = new ColQM2();
+      for ($i = 0 ; $i < $num_rows; $i++)
+      { $row = mysqli_fetch_array($result);
+        $pQM = new QM();
+        $pQM->setCod($row['cod']);
+        $pQM->SetDescricao($row['descricao']);
+        $colQM2->incluirRegistro($pQM);
+      }
+      return $colQM2;
+    }
+  }
+?>

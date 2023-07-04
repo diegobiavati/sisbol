@@ -1,0 +1,286 @@
+<?
+session_start();
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>SisBol</title>
+<script type="text/javascript" src="scripts/jcap.js" charset="UTF-8"></script>
+        <script type="text/javascript" src="scripts/md5.js" charset="UTF-8"></script>
+
+<style type="text/css">
+<!--
+#tabela {
+	position:absolute;
+	left: 50%;
+	top:50%;
+	margin-left: -450px;
+	margin-top: -200px;
+	border: 1px solid #000;
+	width: 800px;
+	height: 477px;
+	text-align:center;
+	border: 0;
+}
+
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.style1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 18px;
+	color: black;
+}
+
+.login {
+    background-image: url("./imagens/entrada_sisbol.png");
+    height: 477px;
+}
+
+.style3 {font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; font-size: 16px; color: #663300; }
+-->
+</style>
+<?
+
+require ('filelist_geral.php');
+require_once('./filelist_om.php');
+$local_user 	= 'supervisor';
+$fachadaSist2 	= new FachadaSist2();
+
+if (isset ($_GET['login'])) { //Se foi requerido login
+		// Testando o captcha
+		if($_POST['cod1'] != md5($_POST['validador'])){
+			echo '<script>window.alert("Acesso negado - Dados inválidos")</script>';		
+			echo '<script>window.location.href="sisbol.php";</script>';
+		}
+}
+
+// Gerar a senha do supervisor
+if (isset ($_GET['supervisor'])) {
+	$local_senha = encriptaSenha($_POST['senha']);
+	$texto = 'supersenha=' . $local_senha;
+	// Alterado pelo Ten S.Lopes 17/04/2012 - ('../supervisor.ini')caminho errado. para-->
+	$size = file_put_contents('../../supervisor.ini', $texto);
+	if ($size > 5) {
+		echo '<script>window.alert("Senha do supervisor gravada com sucesso.");</script>';
+	}
+}
+// Busca o arquivo ini do supervisor
+// Alterado pelo Ten S.Lopes 17/04/2012 - ('../supervisor.ini')caminho errado. para-->
+$iniFile = new IniFile('../../supervisor.ini');
+$supIniFile = new SupIniFile($iniFile);
+$local_senha = $supIniFile->getPassword();
+if ($local_senha == null) {
+	echo '<script>window.alert("Usuário supervisor não cadastrado.\n\n Cadastre o usuário supervisor");';
+	echo 'function administrador(){';
+	echo '	if(document.formLogin.senha.value !== document.formLogin.senha1.value){';
+	echo '		window.alert("As senhas informadas não são iguais.");';
+	echo '		return;';
+	echo '	}';
+
+	echo '	if((document.formLogin.nomeUsuario.value == "")||(document.formLogin.senha.value == "")){';
+	echo '		window.alert("Informe seu nome de usuário e a senha do Administrador.");';
+	echo '		return;';
+	echo '	}';
+	echo '  document.formLogin.action = "sisbol.php?supervisor=true";';
+	echo '	document.formLogin.submit();';
+	echo '}</script>';
+} else {
+	if (isset ($_GET['login'])) { //Se foi requerido login
+		//echo 'foi requerido login';
+		$usuario = new Usuario(null);
+		$usuario->setLogin($_POST['nomeUsuario']);
+		$usuario->setSenha($_POST['senha']);
+		
+		//registra os parametros de configuracao
+		$configuracoes = $fachadaSist2->lerConfiguracoes();
+		$_SESSION['APROVNOTA1'] = $configuracoes->getAprovNota1();		
+		$_SESSION['APROVNOTA2'] = $configuracoes->getAprovNota2();		
+		$_SESSION['APROVBOLETIM'] = $configuracoes->getAprovBoletim();		
+		$_SESSION['IMPRIMENOMESLINHA'] = $configuracoes->getImprimeNomesLinha();		
+		$_SESSION['IMPRIMEASSINATURA'] = $configuracoes->getImprimeAssinatura();
+		$_SESSION['IMPRIMEQMS'] = $configuracoes->getImprimeQMS();		
+		
+		//O primeiro if é para o usuário administrador
+		if (($local_user == $usuario->getLogin()) and (comparaSenha($local_senha, $usuario->getSenha()))) {
+			// registra as variaveis de sessao
+			$_SESSION['TIPOUSER'] = 1;
+			$_SESSION['NOMEUSUARIO'] = $usuario->getLogin();
+
+			$_SESSION['ORGANIZACAO'] = (is_object($fachadaSist2->lerOM()))?$fachadaSist2->lerOM()->getNome():'OM não cadastrada';
+	 		//$_SESSION['OM_VINC'] = '999999';
+	 		//$_SESSION['SUBUN'] = 99;
+         		$_SESSION['TODAS_OMVINC'] = 'X';
+			$_SESSION['TODAS_SUBUN'] = 'X';
+         		$_SESSION['TODAS_OMVINC2'] = 'X';
+	 		$_SESSION['TODAS_SUBUN2'] = 'X';
+	 		$_SESSION['MODIFICA_MODELO'] = 'X';
+			echo '<script>location.href="menuboletim.php"</script>';
+		} else { // se nao e o supervisor, ler o usuario
+			$lUsuario = $fachadaSist2->lerUsuario($usuario->getLogin());
+			//se o usuario nao existe
+			if ($lUsuario == null) {
+				echo '<script>window.alert("Acesso negado - Dados inválidos")</script>';
+			} else { //se existe, verifica a senha
+        		$omVinc = $fachadaSist2->lerOMVinc($lUsuario->getCodom());
+                $siglaOmVinv = $omVinc->getSigla();
+                $subun = $fachadaSist2->lerSubun($lUsuario->getCodom(), $lUsuario->getCodSubun());
+                $siglaSubun = $subun->getSigla();
+                                if ($usuario->getSenha() != $lUsuario->getSenha()) {
+					//echo 'senha infor='.$usuario->getSenha(). 'senha lida='. $lUsuario->getSenha();
+					echo '<script>window.alert("Acesso negado - Dados inválidos")</script>';
+				} else { //usuario e senha corretos, registra as variaveis de sessao
+					$_SESSION['TIPOUSER'] = 1;
+			 		$_SESSION['NOMEUSUARIO'] = $usuario->getLogin();
+			 		$_SESSION['ORGANIZACAO'] = (is_object($fachadaSist2->lerOM()))?$fachadaSist2->lerOM()->getNome():'OM não cadastrada';
+			 		$_SESSION['OM_VINC'] = $lUsuario->getCodom();
+			 		$_SESSION['SIGLA_OM_VINC'] = $siglaOmVinv;
+			 		$_SESSION['SUBUN'] = $lUsuario->getCodSubun();
+			 		$_SESSION['SIGLA_SUBUN'] = $siglaSubun;
+			 		$_SESSION['TODAS_OMVINC'] = $lUsuario->getTodasOmVinc();
+			 		$_SESSION['TODAS_SUBUN'] = $lUsuario->getTodasSubun();
+			 		$_SESSION['TODAS_OMVINC2'] = $lUsuario->getTodasOmVinc2();
+			 		$_SESSION['TODAS_SUBUN2'] = $lUsuario->getTodasSubun2();
+			 		$_SESSION['MODIFICA_MODELO'] = $lUsuario->getModificaModelo();
+					echo '<script>location.href="menuboletim.php"</script>';
+				} //fim do else
+			} //fim do else
+		}
+	}
+}
+?>
+<script type="text/javascript" language="javascript">
+	function login(){
+		if((document.formLogin.nomeUsuario.value == '')||(document.formLogin.senha.value == '')){
+			window.alert("Informe seu nome de usuário e a senha.");
+			return;
+		}
+			document.formLogin.action = "sisbol.php?login=true";
+			document.formLogin.submit();
+	}
+
+	function capturaTecla(e){
+		if(document.all){
+			tecla=event.keyCode;
+		}
+		else
+		{
+		tecla=e.which;
+		}
+		if(tecla==13){
+			//window.alert("acessei");
+			login();
+		}
+	}
+
+	document.onkeydown = capturaTecla;
+</script>
+</head>
+<body>
+<form id="form1" name="formLogin" method="post" action="#" >
+  <table id="tabela" width="600" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td valign="top" ><div class="login">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="32%" height="135">&nbsp;</td>
+              <td width="11%">&nbsp;</td>
+              <td width="3%">&nbsp;</td>
+              <td width="24%">&nbsp;</td>
+              <td height ="30" align="right"><font size="2" color="#FFFFFF"><b>Versão 2.3 - jun 2012</b></font><br>
+              </td>
+              <td width="4%">&nbsp;</td>
+            </tr>
+            <tr>
+              <td height="38">&nbsp;</td>
+              <td height="38" colspan="4"><div align="center" class="style1" id="titulo">Seja Bem-vindo</div></td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td height="38">&nbsp;</td>
+              <td height="38" class="style3" align="left"><font color="#000000" size="2">Login:</font></td>
+              <td height="38" colspan="2"  align="left"><input type="text" name="nomeUsuario"/></td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td height="38">&nbsp;</td>
+              <td height="38" class="style3" align="left"><font color="#000000" size="2">Senha:</font></td>
+              <td height="38" colspan="2"  align="left"><input type="password" name="senha" maxlength="16"  size="14"/></td>
+              <td align="left" class="style3"><div id="confSenha" style="visibility:hidden">
+              <font color="#000000" size="2">Confirme:</font>
+              <input type="password" name="senha1" maxlength="16" size="14"/>
+              </div>
+              </td>
+              <td>&nbsp;</td>
+            </tr>
+            
+            <tr>
+              <td height="38">&nbsp;</td>
+              <td height="38" class="style3" valign="top" align="right"></td>
+              <td height="38" colspan="2">
+                <script type="text/javascript">sjcap();</script></td>
+              <td></td>
+              <td>&nbsp;</td>
+            </tr>
+            
+            <tr>
+              <td height="33">&nbsp;</td>
+              <td height="33"><div align="center">
+                  <label></label>
+                </div></td>
+              <td height="33">&nbsp;</td>
+              <td><label>
+                <?
+			if ($local_senha == null) {
+				echo '<input type="button" name="Submit" value="Cadastrar" onclick="administrador()"/>';
+				echo '<script>	document.formLogin.nomeUsuario.value="supervisor";';
+				echo '			document.formLogin.nomeUsuario.readOnly = true;';
+				echo '			document.formLogin.senha.value="";';
+				echo '			document.getElementById("titulo").innerHTML = "Cadastro da senha do supervisor";';
+				echo '			document.getElementById("confSenha").style.visibility = "visible";</script>';
+			} else {
+				echo '<input type="button" name="Submit" value="Entrar" onclick="login()"/>';
+				echo '<input type="reset" name="Submit2" value="Limpar" />';
+			}
+			?>
+                </label></td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+          </table>
+        </div></td>
+    </tr>
+  </table>
+</form>
+<script type="text/javascript" language="javascript">document.formLogin.nomeUsuario.focus();</script>
+<!-- Sisbol 2.0 -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript" language="javascript">
+try {
+var pageTracker = _gat._getTracker("UA-16231774-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- Sisbol 2.3 -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33370324-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

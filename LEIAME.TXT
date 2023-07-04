@@ -1,0 +1,78 @@
+IMPORTANTE: para os casos de atualizacao da versao 2.3 para a versao 2.4, faca primeiramente uma copia de seguranca (backup) do banco de dados a partir do menu “Especiais - Gerar Backup”; a seguir copie este arquivo de backup gerado (com extensao .sql) e todos os outros arquivos gerados pelo sistema, por exemplo: os boletins, as alteracoes e as fichas para uma midia externa (CD/HD externo/Pen Drive) ou para outro computador a fim de garantir que, caso ocorra qualquer eventualidade, o SisBol possa ser restaurado com todas as informacoes que possuia antes da atualizacao.
+
+
+****************** INSTALAR O SISBOL PELA PRIMEIRA VEZ ****************************
+OBSERVACOES:
+Caso seja a primeira instalacao do SisBol nao ha necessidade de instalar as revisoes anteriores.
+
+Para instalar o SisBol pela primeira vez e so seguir os passos abaixo:
+0 - como "root" (su) execute o comando no Console:
+    "aptitude install apache2 mysql-server php5 php5-mysql phpmyadmin"
+
+	 A - Nova senha para o usuário "root" do MySQL
+	 -> DEIXAR EM BRANCO
+
+	 B - SERVIDOR PARA O PHPADMIN - A RECONFIGURAR AUTOMATICAMENTE:
+	 -> APACHE2
+
+	 C - Nova senha para o usuário "root" do MySQL
+	 -> DEIXAR EM BRANCO
+
+	 D - Nome do usuario para o sistema de configuracao baseado na web
+	 -> admin
+
+	 E - Senha para o sistema de configuracao baseado na web
+	 -> QUALQUER UMA, MAS E IMPORTANTE NAO ESQUECE-LA!!!
+
+	 F - Voce deseja que o apache2 seja reiniciado agora?
+	 -> SIM
+
+1 - baixe o arquivo "sisbol_v2.4.tar.gz"
+
+2 - descompacte o arquivo utilizando o comando "tar -xzvf "sisbol_v2.4.tar.gz"
+	Obs: Pode ser no próprio Desktop
+
+3 - acesse a pasta "sisbol_v2.4" criada apos a descompactacao (cd sisbol_v2.4)
+
+4 - torne executavel o arquivo "sisbol_v2.4.sh" (chmod a+x sisbol_v2.4.sh)
+
+5 - execute o arquivo "sisbol_v2.4.sh" (./sisbol_v2.4.sh)
+
+6 - abra o browser e digite na barra de endereços "localhost/band/configuracao.php" e tecle <enter>
+
+7 - clique no botao "GerarBanco"
+
+8 - Se for exibida a mensagem "Banco gerado com sucesso.", digite "localhost/band" na barra de enderecos e tecle <enter>
+
+9 - defina uma senha para o usuario "supervisor" e efetue o login no sistema.
+
+10 - abra o browser e digite na barra de enderecos "localhost/band" e tecle <enter>
+
+
+
+*************** ATUALIZAR O SISBOL DA VERSÃO 2.3 PARA VERSÃO 2.4************************
+OBSERVACOES:
+Caso ja possua o SisBol, certifique-se de que sua versao atual seja a 2.3; caso contrario, antes de atualizar para a versão 2.4, baixe o instalador da versao 2.3 e faça essa atualizacao primeiro. 
+
+Para atualizar o SisBol e so seguir os passos abaixo:
+
+1 - Faca um backup do sistema:
+    A - BANCO DE DADOS (ARQUIVO .SQL GERADO PELO SISBOL) - LOCAL: /VAR/WWW/BACKUP
+    B - BOLETINS GERADOS (ARQUIVOS .PDF) - LOCAL: /VAR/WWW/BAND/BOLETIM
+    C - ALTERACOES GERADAS (ARQUIVOS .PDF) - LOCAL: /VAR/WWW/BAND/ALTERACAO
+
+2 - baixe o arquivo "sisbol_v2.4.tar.gz"
+
+3 - descompacte o arquivo utilizando o comando "tar -xzvf "sisbol_v2.4.tar.gz"
+	Obs: Pode ser no próprio Desktop
+
+4 - acesse a pasta "sisbol_v2.4" criada apos a descompactacao (cd sisbol_v2.4)
+
+5 - torne executavel o arquivo "sisbol_v2.4.sh" (chmod a+x sisbol_v2.4.sh)
+
+6 - execute o arquivo "sisbol_v2.4.sh" (./sisbol_v2.4.sh)
+
+7 - abra o browser e digite na barra de enderecos "localhost/band" e tecle <enter>
+    OBS: aguarde alguns instantes ate que a mensagem de atualizacao seja mostrada
+
+8 - saiba as novidades da versão 2.4, leia o conteudo do arquivo em "http://www.3cta.eb.mil.br/sitesisbol/tmp/documentacao/novidades2.4.pdf"

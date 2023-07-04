@@ -1,0 +1,9 @@
+DÚVIDAS FREQÜENTES
+
+
+P: Com a automatização do Sistema, qual a função do militar que elabora as alterações ?
+
+O militar elaborava as alterações não vai mais fazer tal tarefa. Suas funções se limitarão a conferência e lançamentos dos tempos de serviço. Diariamente, após a elaboração do boletim e antes de sua assinatura, o militar deverá conferir se tudo que foi lançado no BI e que deve ser transcrito para as alterações foi realmente transcrito, e se tudo que foi lançado nas alterações deveria realmente constar nestas. Os erros que por ventura venham a ocorrer deverão ser corrigidos no boletim e as alterações serão atualizadas automaticamente. As alterações serão sempre uma transcrição exata daquilo que foi publicado em boletim.
+
+Caso seja descoberto um erro após a publicação do boletim, a matéria deverá ser, preferencialmente republicada, ou então, deverá ser cancalada a assinatura do boletim, cancelada a aprovação do boletim, excluída a matéria do boletim, cancelada a sua aprovação para que esta matéria esteja disponível para correções. Tais procedimentos são necessários para evitar erros e fraudes e dar conhecimento atodas as  autoridades envolvidas no processo de tais correções/modificações.
+
